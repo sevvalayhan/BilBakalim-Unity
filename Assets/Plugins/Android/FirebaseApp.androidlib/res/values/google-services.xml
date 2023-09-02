@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://bilbakalim-game-default-rtdb.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">1064057716181</string>
+  <string name="google_storage_bucket" translatable="false">bilbakalim-game.appspot.com</string>
+  <string name="project_id" translatable="false">bilbakalim-game</string>
+  <string name="google_api_key" translatable="false">AIzaSyDemyU8WnzJHFJ9UKoDF1PZk5acUlGeups</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDemyU8WnzJHFJ9UKoDF1PZk5acUlGeups</string>
+  <string name="google_app_id" translatable="false">1:1064057716181:android:5890ef78de5f47c823d15c</string>
+  <string name="default_web_client_id" translatable="false">1064057716181-v2eoem78ln2sksqf86t606lo5ithi6eq.apps.googleusercontent.com</string>
+</resources>

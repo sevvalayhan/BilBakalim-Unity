@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 7fc501a148b56e042979184ac5a06059
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - EB Garamond
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9498d4f0600ed3845bc51f8b8dbbae18, type: 3}
+  - {fileID: 12800000, guid: 00764667723b47d4c9c0b3037d411204, type: 3}
+  - {fileID: 12800000, guid: cca410326c22f6f45897e13028d6abd0, type: 3}
+  - {fileID: 12800000, guid: be3d279716394c946ae69b8f028ff8db, type: 3}
+  - {fileID: 12800000, guid: f8ef554727681e24480828415bf5ccab, type: 3}
+  - {fileID: 12800000, guid: 825bcb034c84cd14f82ab16596ae598e, type: 3}
+  - {fileID: 12800000, guid: d9d15cd13b28cf7448bf7c9cc0f4d534, type: 3}
+  - {fileID: 12800000, guid: ae6e4b4567fea28418746105f4567dfd, type: 3}
+  - {fileID: 12800000, guid: b3cae9452cf7fab42967233a90f94ed3, type: 3}
+  - {fileID: 12800000, guid: 38df99766d4c947489c8ee626428776e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1064057716181",
+    "firebase_url": "https://bilbakalim-game-default-rtdb.firebaseio.com",
+    "project_id": "bilbakalim-game",
+    "storage_bucket": "bilbakalim-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064057716181:android:5890ef78de5f47c823d15c",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.BilBakalimGame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064057716181-v2eoem78ln2sksqf86t606lo5ithi6eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDemyU8WnzJHFJ9UKoDF1PZk5acUlGeups"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064057716181-v2eoem78ln2sksqf86t606lo5ithi6eq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1064057716181-ii8peo37d6brqol9agtv4p5lsn2vmpnq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.DefaultCompany.BilBakalimGame"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

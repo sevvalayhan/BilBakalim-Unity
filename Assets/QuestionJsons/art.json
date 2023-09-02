@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "Türkiye'nin başkenti?'",
+    "answers": [ "1", "Ankara", "3", "4" ],
+    "rightAnswerIndex": 1
+  },
+  {
+    "questionText": "2+2=?",
+    "answers": [ "15", "4", "35", "45" ],
+    "rightAnswerIndex": 1
+  },
+  {
+    "questionText": "5+5?",
+    "answers": [ "16", "10", "36", "46" ],
+    "rightAnswerIndex": 1
+  }
+]
