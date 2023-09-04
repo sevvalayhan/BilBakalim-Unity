@@ -9,6 +9,8 @@ public class PanelController : MonoBehaviour
     [field: SerializeField] public GameObject QuestionPanel { get; private set; }
     [field: SerializeField] public GameObject ResultPanel { get; private set; }
     [field: SerializeField] public GameObject MainMenuPanel { get; private set; }
+    [field: SerializeField] public GameObject BackToCategoryPanel { get; private set; }
+    [field: SerializeField] public GameObject AppQuitPanel { get; private set; }
     [SerializeField] private TextMeshProUGUI continueGameText;
     [SerializeField] private TextMeshProUGUI welcomePlayerText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
@@ -50,5 +52,5 @@ public class PanelController : MonoBehaviour
                 allPanels[i].SetActive(false);
             }
         }
-    }
+    }   
 }

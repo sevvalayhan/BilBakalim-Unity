@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         GameManager.IsGameOver = true;
         GameManager.IsGameActive = false;
         questionController.OnGameOver();
-    }
+    }   
     public void AppQuit()
     {
         Application.Quit();

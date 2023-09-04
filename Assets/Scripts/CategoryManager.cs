@@ -22,7 +22,7 @@ public class CategoryManager : MonoBehaviour
         }
         Debug.Log(CategoryCounters);
     }
-    private void OnDestroy()
+    public void OnDestroy()
     {
         string json = JsonConvert.SerializeObject(CategoryCounters);
         PlayerPrefs.SetString(QuestionController.CATEGORY_PROGRESS, json);

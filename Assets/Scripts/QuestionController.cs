@@ -39,9 +39,9 @@ public class QuestionController : MonoBehaviour
         }
     }
     public void CheckAnswer(AnswerButton clickedButton)
-    {
+    {       
         if (questionProvider.LoadedQuestions[counter].RightAnswerIndex == clickedButton.AnswerIndex)
-        {
+        { 
             counter++;
             score++;
             categoryManager.SetCategoryCounter(categoryManager.CurrentCategory,counter);
@@ -61,11 +61,13 @@ public class QuestionController : MonoBehaviour
             }
         }
         else
-        {
+        { 
             Debug.Log("False");
             StartCoroutine(clickedButton.ChangeButtonColorAnimation(Color.red));
             AudioManager.Instance.Play(AudioManager.Instance.FalseEffectSource);
+            StartCoroutine(answerButtons[questionProvider.LoadedQuestions[counter].RightAnswerIndex].ChangeButtonColorAnimation(Color.green));
             StartCoroutine(NextQuestion());
+            counter++;
         }
     }
     public void OnGameOver()
@@ -76,12 +78,13 @@ public class QuestionController : MonoBehaviour
         GameManager.IsGameActive = false;
         panelController.SetPanelActive(panelController.ResultPanel);
         scoreTitleText.text = score.ToString() + " doðru cevap verdiniz.";
+        timeController.ResetTime();
     }
     public void RepeatGame()
     {
+        counter++;
         GameManager.IsGameOver = false;
-        GameManager.IsGameActive = true;
-        counter = 0;
+        GameManager.IsGameActive = true;        
         score = 0;
         panelController.SetPanelActive(panelController.QuestionPanel);
         timeController.ResetTime();
@@ -89,7 +92,7 @@ public class QuestionController : MonoBehaviour
     public IEnumerator NextQuestion()
     {
         quizAnimator.SetTrigger("IsExitAnimActive");//SetExitAnimActive 
-        yield return new WaitForSeconds(loadingTime);
+        yield return new WaitForSeconds(loadingTime);        
         quizAnimator.SetTrigger("IsLoadAnimationActive");
         SetAnswerButtonData();
     }
