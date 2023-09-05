@@ -32,6 +32,10 @@ public class PanelController : MonoBehaviour
             totalScoreText.text = "En yüksek puanýnýz " + PlayerPrefs.GetInt(PLAYER_HIGHT_SCORE).ToString();
         }
     }
+    private void Update()
+    {
+        UpdatePanelText();
+    }
     public void SavePlayerButton()
     {
         PlayerPrefs.SetString(PLAYER_PREF_NAME, inputName.text);
@@ -52,5 +56,11 @@ public class PanelController : MonoBehaviour
                 allPanels[i].SetActive(false);
             }
         }
-    }   
+    }
+    private void UpdatePanelText()
+    {
+        continueGameText.text = PlayerPrefs.GetString(PLAYER_PREF_NAME) + " Olarak Devam Et";
+        welcomePlayerText.text = "Hoþgeldin " + PlayerPrefs.GetString(PLAYER_PREF_NAME);
+        totalScoreText.text = "En yüksek puanýnýz " + PlayerPrefs.GetInt(PLAYER_HIGHT_SCORE).ToString();
+    }
 }
