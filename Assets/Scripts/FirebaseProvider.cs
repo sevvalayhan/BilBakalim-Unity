@@ -72,9 +72,9 @@ public class FirebaseProvider : MonoBehaviour, IQuestionProvider
         }
         return true;
     }
-    public async void TrySaveUser(string deviceId, User user)
+    public async void TrySaveUser(User user)
     {
         string userJson = JsonConvert.SerializeObject(user);
-        await reference.Child("UserData").Child("DeviceId").Child(deviceId).SetRawJsonValueAsync(userJson);
-    } 
+        await reference.Child("UserData").Child("DeviceId").Child(user.DeviceId).SetRawJsonValueAsync(userJson);
+    }   
 }
