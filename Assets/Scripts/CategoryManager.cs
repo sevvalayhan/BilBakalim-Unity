@@ -4,8 +4,17 @@ using UnityEngine;
 public class CategoryManager:MonoBehaviour
 {
     public static string CurrentCategory;
+    [SerializeField] private FirebaseProvider firebaseProvider;
+    [SerializeField] private UserProgress userProgress;
     public Dictionary<string, int> CategoryCounters { get; set; }
-    private void Start()
+    public async void CategoryProgressInitialize()
+    {
+        if (!await firebaseProvider.TryGetCategoryProgress(userProgress.DeviceId))
+        {
+            CategoryCounters = new Dictionary<string, int>();
+        }
+    }
+    public void CategoryManagerInitialize()
     {
         string progressDictJson = PlayerPrefs.GetString(QuestionController.CATEGORY_PROGRESS);
         if (string.IsNullOrEmpty(progressDictJson))
@@ -21,10 +30,6 @@ public class CategoryManager:MonoBehaviour
     public void OnDestroy()
     {
         SetCategoryCounter(CurrentCategory,QuestionController.counter);
-        Debug.Log(QuestionController.counter);
-        string json = JsonConvert.SerializeObject(CategoryCounters);
-        PlayerPrefs.SetString(QuestionController.CATEGORY_PROGRESS, json);
-        PlayerPrefs.Save();
     }
     public void SetCategoryCounter(string categoryName,int counter)
     {
@@ -33,13 +38,11 @@ public class CategoryManager:MonoBehaviour
     }
     public int GetCategoryCounter(string categoryName)
     {
-        Debug.Log(CurrentCategory);
         InitializeCategoryCounter(categoryName);
         return CategoryCounters[categoryName];
     }
     private void InitializeCategoryCounter(string categoryName)
     {
-       // Debug.Log(CategoryCounters.ContainsKey(categoryName));
         if (!CategoryCounters.ContainsKey(CurrentCategory))
         {
             CategoryCounters.Add(categoryName, 0);

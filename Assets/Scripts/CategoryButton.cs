@@ -18,9 +18,9 @@ public class CategoryButton : MonoBehaviour
             if (await questionProvider.TryLoadQuestionsFromCategoryName(categoryName))
             {
                 CategoryManager.CurrentCategory = categoryName;
-                questionController.Initialize();                
+                categoryManager.CategoryProgressInitialize();
+                questionController.Initialize();
             }
-
             else
             {
                 Debug.LogError("Could not connect to Firebase!");

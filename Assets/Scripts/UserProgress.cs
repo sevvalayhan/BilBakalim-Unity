@@ -5,27 +5,29 @@ public class UserProgress : MonoBehaviour
     private User user;
     [SerializeField] private PanelController panelController;
     [SerializeField] private FirebaseProvider firebaseProvider;
-    [SerializeField] private CategoryManager categoryManager;   
+    [SerializeField] private CategoryManager categoryManager;
+    public string DeviceId;
     private void Start()
     {        
         user = new User();      
-        user.DeviceId = SystemInfo.deviceUniqueIdentifier;
+        DeviceId = SystemInfo.deviceUniqueIdentifier;
         user.CategoryProgress = new Dictionary<string, int>();
     }
+  
     public void SaveUser()
     {
         panelController.SavePlayerButton();
         user.HighScore = PlayerPrefs.GetInt(PanelController.PLAYER_HIGH_SCORE);
         user.UserName = PlayerPrefs.GetString(PanelController.PLAYER_PREF_NAME);
         Debug.Log(user.UserName);
-        firebaseProvider.TrySaveUser(user);
+        firebaseProvider.TrySaveUser(DeviceId,user);
     }
     void SaveUserHighScore()
     {
         user.HighScore = PlayerPrefs.GetInt(PanelController.PLAYER_HIGH_SCORE);
         user.CategoryProgress = categoryManager.CategoryCounters;
         user.UserName=PlayerPrefs.GetString(PanelController.PLAYER_PREF_NAME);
-        firebaseProvider.TrySaveUser(user);
+        firebaseProvider.TrySaveUser(DeviceId, user);
     }
     private void OnDestroy()
     {

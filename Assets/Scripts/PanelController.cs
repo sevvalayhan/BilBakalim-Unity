@@ -36,6 +36,7 @@ public class PanelController : MonoBehaviour
     {
         PlayerPrefs.SetString(PLAYER_PREF_NAME, InputName.text);
         PlayerPrefs.SetInt(PLAYER_HIGH_SCORE, 0);
+        //PlayerPrefs.SetString(QuestionController.CATEGORY_PROGRESS,string.Empty);
         PlayerPrefs.Save();       
         SetPanelActive(CategoryPanel);
         UpdatePanelText();

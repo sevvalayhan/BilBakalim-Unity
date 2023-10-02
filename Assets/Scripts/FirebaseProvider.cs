@@ -21,6 +21,7 @@ public class FirebaseProvider : MonoBehaviour, IQuestionProvider
         }
     }   
     public List<Question> LoadedQuestions { get; set; }
+    [SerializeField] CategoryManager categoryManager;
     private DatabaseReference reference;
     private void Start()
     {
@@ -62,19 +63,29 @@ public class FirebaseProvider : MonoBehaviour, IQuestionProvider
             throw;
         }
     }
-    public async Task<bool> TryCheckDeviceId(string deviceId)
+    public async Task<bool> TryGetCategoryProgress(string DeviceId)
     {
-        var userSnapShot = await reference.Child("UserData").Child("DeviceId").Child(deviceId).GetValueAsync();
-        if (!userSnapShot.Exists)
+        try
         {
-            Debug.Log("DeviceId not found");
-            return false;
+            var userCategoryProgressSnapshot = await reference.Child("UserData").Child("DeviceId").Child(DeviceId).Child("CategoryProgress").GetValueAsync();
+            if (!userCategoryProgressSnapshot.Exists)
+            {
+                Debug.Log("Error loading questions: CategoryProgress snapshot does not exist.");
+            }
+            string categoryProgressJson = userCategoryProgressSnapshot.GetRawJsonValue();
+            Dictionary<string,int> progressDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(categoryProgressJson);
+            categoryManager.CategoryCounters = progressDict;      
+            return true;
         }
-        return true;
+        catch (Exception ex)
+        {
+            Debug.LogError("Error: " + ex);
+            return false;
+        }         
     }
-    public async void TrySaveUser(User user)
+    public async void TrySaveUser(string DeviceId, User user)
     {
         string userJson = JsonConvert.SerializeObject(user);
-        await reference.Child("UserData").Child("DeviceId").Child(user.DeviceId).SetRawJsonValueAsync(userJson);
+        await reference.Child("UserData").Child("DeviceId").Child(DeviceId).SetRawJsonValueAsync(userJson);
     }   
 }
