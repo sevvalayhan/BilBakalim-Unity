@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-
 public class Question
 {
     public List<string> Answers { get; private set; }

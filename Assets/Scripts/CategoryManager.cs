@@ -1,29 +1,27 @@
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-public class CategoryManager : MonoBehaviour
+public class CategoryManager:MonoBehaviour
 {
-    public string CurrentCategory;
-    public Dictionary<string, int> CategoryCounters { get;private set; }
+    public static string CurrentCategory;
+    public Dictionary<string, int> CategoryCounters { get; set; }
     private void Start()
     {
-        string progressDictJson = PlayerPrefs.GetString(QuestionController.CATEGORY_PROGRESS,string.Empty);
-        if (!string.IsNullOrEmpty(progressDictJson))
-        {            
-            Dictionary<string,int> progressDict = JsonConvert.DeserializeObject<Dictionary<string,int>>(progressDictJson);
-            CategoryCounters = progressDict;
-        }
-        else
+        string progressDictJson = PlayerPrefs.GetString(QuestionController.CATEGORY_PROGRESS);
+        if (string.IsNullOrEmpty(progressDictJson))
         {
             CategoryCounters = new Dictionary<string, int>();
         }
-        Debug.Log(CategoryCounters);
+        else
+        {
+            Dictionary<string, int> progressDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(progressDictJson);
+            CategoryCounters = progressDict;
+        }
     }
     public void OnDestroy()
     {
+        SetCategoryCounter(CurrentCategory,QuestionController.counter);
+        Debug.Log(QuestionController.counter);
         string json = JsonConvert.SerializeObject(CategoryCounters);
         PlayerPrefs.SetString(QuestionController.CATEGORY_PROGRESS, json);
         PlayerPrefs.Save();
@@ -35,15 +33,16 @@ public class CategoryManager : MonoBehaviour
     }
     public int GetCategoryCounter(string categoryName)
     {
+        Debug.Log(CurrentCategory);
         InitializeCategoryCounter(categoryName);
         return CategoryCounters[categoryName];
     }
     private void InitializeCategoryCounter(string categoryName)
     {
-        Debug.Log(CategoryCounters);
-        if (!CategoryCounters.ContainsKey(categoryName))
+       // Debug.Log(CategoryCounters.ContainsKey(categoryName));
+        if (!CategoryCounters.ContainsKey(CurrentCategory))
         {
-            CategoryCounters.Add(categoryName, 0);            
+            CategoryCounters.Add(categoryName, 0);
         }
     }
 }

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 public class PanelController : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField inputName;
+    [field: SerializeField] public TMP_InputField InputName { get; private set; }
     [field: SerializeField] public GameObject SavePlayerPanel { get; private set; }
     [field: SerializeField] public GameObject CategoryPanel { get; private set; }
     [field: SerializeField] public GameObject QuestionPanel { get; private set; }
@@ -16,8 +16,8 @@ public class PanelController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalScoreText;
     [SerializeField] private TextMeshProUGUI resultText;
     [SerializeField] private List<GameObject> allPanels;
-    public string PLAYER_PREF_NAME { get; private set; } = "name";
-    public string PLAYER_HIGHT_SCORE { get; private set; } = "score";    
+    public const string PLAYER_PREF_NAME = "name";
+    public const string PLAYER_HIGH_SCORE = "score";
     void Start()
     {
         if (string.IsNullOrEmpty(PlayerPrefs.GetString(PLAYER_PREF_NAME, string.Empty)))
@@ -29,19 +29,16 @@ public class PanelController : MonoBehaviour
             MainMenuPanel.SetActive(true);
             continueGameText.text = PlayerPrefs.GetString(PLAYER_PREF_NAME) + " Olarak Devam Et";
             welcomePlayerText.text = "Hoþgeldin " + PlayerPrefs.GetString(PLAYER_PREF_NAME);
-            totalScoreText.text = "En yüksek puanýnýz " + PlayerPrefs.GetInt(PLAYER_HIGHT_SCORE).ToString();
+            totalScoreText.text = "En yüksek puanýnýz " + PlayerPrefs.GetInt(PLAYER_HIGH_SCORE).ToString();
         }
-    }
-    private void Update()
-    {
-        UpdatePanelText();
-    }
+    }    
     public void SavePlayerButton()
     {
-        PlayerPrefs.SetString(PLAYER_PREF_NAME, inputName.text);
-        PlayerPrefs.SetInt(PLAYER_HIGHT_SCORE, 0);
-        PlayerPrefs.Save();
+        PlayerPrefs.SetString(PLAYER_PREF_NAME, InputName.text);
+        PlayerPrefs.SetInt(PLAYER_HIGH_SCORE, 0);
+        PlayerPrefs.Save();       
         SetPanelActive(CategoryPanel);
+        UpdatePanelText();
     }
     public void SetPanelActive(GameObject targetPanel)
     {
@@ -57,10 +54,10 @@ public class PanelController : MonoBehaviour
             }
         }
     }
-    private void UpdatePanelText()
+    public void UpdatePanelText()
     {
         continueGameText.text = PlayerPrefs.GetString(PLAYER_PREF_NAME) + " Olarak Devam Et";
         welcomePlayerText.text = "Hoþgeldin " + PlayerPrefs.GetString(PLAYER_PREF_NAME);
-        totalScoreText.text = "En yüksek puanýnýz " + PlayerPrefs.GetInt(PLAYER_HIGHT_SCORE).ToString();
+        totalScoreText.text = "En yüksek puanýnýz " + PlayerPrefs.GetInt(PLAYER_HIGH_SCORE).ToString();
     }
 }

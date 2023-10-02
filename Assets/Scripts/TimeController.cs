@@ -4,7 +4,7 @@ public class TimeController : MonoBehaviour
 {
     private float currentTime;
     [SerializeField] GameManager gameManager;
-    [field:SerializeField] public float DefaultTime { get; private set; }
+    [field: SerializeField] public float DefaultTime { get; private set; }
     [SerializeField] TextMeshProUGUI timeText;
     void Start()
     {

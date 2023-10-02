@@ -1,27 +1,27 @@
-using Firebase.Database;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using Firebase;
+using Firebase.Database;
 using System;
 using Newtonsoft.Json;
-public class FirebaseQuestionProvider : MonoBehaviour, IQuestionProvider
+public class FirebaseProvider : MonoBehaviour, IQuestionProvider
 {
-    private static FirebaseQuestionProvider instance;
-
-    public static FirebaseQuestionProvider Instance
+    private static FirebaseProvider instance;
+    public static FirebaseProvider Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<FirebaseQuestionProvider>();
+                instance = FindObjectOfType<FirebaseProvider>();
             }
+            Debug.Log(instance.ToString());
             return instance;
         }
-    }
-    private DatabaseReference reference;
+    }   
     public List<Question> LoadedQuestions { get; set; }
+    private DatabaseReference reference;
     private void Start()
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -32,14 +32,13 @@ public class FirebaseQuestionProvider : MonoBehaviour, IQuestionProvider
     public async Task<bool> TryLoadQuestionsFromCategoryName(string categoryName)
     {
         try
-        {
+        {            
             var categorySnapshot = await reference.Child("categories").Child(categoryName).GetValueAsync();
             if (!categorySnapshot.Exists)
             {
-                Debug.LogError("Error loading questions: Category snapshot does not exist.");                
-            }      
+                Debug.LogError("Error loading questions: Category snapshot does not exist.");
+            }
             string questionJson = categorySnapshot.GetRawJsonValue();
-            Debug.Log(questionJson);
             LoadedQuestions = JsonConvert.DeserializeObject<List<Question>>(questionJson);
             LoadedQuestions.RemoveAll((question) => question == null);
             return true;
@@ -50,7 +49,7 @@ public class FirebaseQuestionProvider : MonoBehaviour, IQuestionProvider
             return false;
         }
     }
-    public async void TrySaveQuestion(Question newQuestion,string categoryName,int questionIndex)
+    public async void TrySaveQuestion(Question newQuestion, string categoryName, int questionIndex)
     {
         try
         {
@@ -63,4 +62,19 @@ public class FirebaseQuestionProvider : MonoBehaviour, IQuestionProvider
             throw;
         }
     }
+    public async Task<bool> TryCheckDeviceId(string deviceId)
+    {
+        var userSnapShot = await reference.Child("UserData").Child("DeviceId").Child(deviceId).GetValueAsync();
+        if (!userSnapShot.Exists)
+        {
+            Debug.Log("DeviceId not found");
+            return false;
+        }
+        return true;
+    }
+    public async void TrySaveUser(string deviceId, User user)
+    {
+        string userJson = JsonConvert.SerializeObject(user);
+        await reference.Child("UserData").Child("DeviceId").Child(deviceId).SetRawJsonValueAsync(userJson);
+    } 
 }

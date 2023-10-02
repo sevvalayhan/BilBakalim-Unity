@@ -3,7 +3,7 @@ using UnityEngine.UI;
 public class CategoryButton : MonoBehaviour
 {
     [SerializeField] Button categoryButton;
-    [SerializeField] FirebaseQuestionProvider questionProvider;
+    [SerializeField] FirebaseProvider questionProvider;
     [SerializeField] QuestionController questionController;
     [SerializeField] CategoryManager categoryManager;
     public string categoryName;
@@ -16,10 +16,11 @@ public class CategoryButton : MonoBehaviour
         if (questionController != null && categoryName != null)
         {
             if (await questionProvider.TryLoadQuestionsFromCategoryName(categoryName))
-            {     
-                categoryManager.CurrentCategory = categoryName;
-                questionController.Initialize(categoryName);
+            {
+                CategoryManager.CurrentCategory = categoryName;
+                questionController.Initialize();                
             }
+
             else
             {
                 Debug.LogError("Could not connect to Firebase!");

@@ -2,26 +2,25 @@ using UnityEngine;
 public class BackButtonController : MonoBehaviour
 {
     [SerializeField] private PanelController panelController;
-
     void Update()
     {
-        BackToOtherPanel();
-    }
-    public void BackToOtherPanel()
+        BackToOtherPanelWith_SwitchCase_Struct();
+    }  
+    public void BackToOtherPanelWith_SwitchCase_Struct()
     {
         switch (Input.GetKeyDown(KeyCode.Escape))
-        {
+        {            
             case true when panelController.QuestionPanel.activeSelf:
                 if (!panelController.BackToCategoryPanel.activeSelf)
                 {
                     panelController.BackToCategoryPanel.SetActive(true);
+                    Debug.Log("Switch-Case");
                 }
                 else
                 {
                     panelController.BackToCategoryPanel.SetActive(false);
                 }
                 break;
-
             case true when panelController.CategoryPanel.activeSelf:
                 panelController.SetPanelActive(panelController.MainMenuPanel);
                 break;
@@ -38,7 +37,7 @@ public class BackButtonController : MonoBehaviour
                 break;
         }
     }
-    void Method()
+    void BackToOtherPanelWithIfStruct()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {

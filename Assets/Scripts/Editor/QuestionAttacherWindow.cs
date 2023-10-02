@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 public class QuestionAttacherWindow : EditorWindow
 {
-    FirebaseQuestionProvider questionProvider;
+    FirebaseProvider questionProvider;
     private string categoryName;
     private string questionText;
     private string answer1;
@@ -19,13 +19,13 @@ public class QuestionAttacherWindow : EditorWindow
     }
     private void OnEnable()
     {
-        questionProvider = FirebaseQuestionProvider.Instance;   
+        questionProvider = FirebaseProvider.Instance;   
     }
     void OnGUI()
     {
-        questionProvider = FirebaseQuestionProvider.Instance;
+        questionProvider = FirebaseProvider.Instance;
         GUILayout.Label("Kategori adlarý: science, cografya, art, philosophy,music", EditorStyles.boldLabel);
-        questionProvider = EditorGUILayout.ObjectField("Script Reference", questionProvider, typeof(FirebaseQuestionProvider), false) as FirebaseQuestionProvider;
+        questionProvider = EditorGUILayout.ObjectField("Script Reference", questionProvider, typeof(FirebaseProvider), false) as FirebaseProvider;
         categoryName = EditorGUILayout.TextField("Kategori Adý: ", categoryName);
         questionText = EditorGUILayout.TextField("Soru metni: ", questionText);
         answer1 = EditorGUILayout.TextField("answers[0]: ", answer1);
