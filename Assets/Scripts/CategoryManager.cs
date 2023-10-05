@@ -6,10 +6,14 @@ public class CategoryManager:MonoBehaviour
     public static string CurrentCategory;
     [SerializeField] private FirebaseProvider firebaseProvider;
     [SerializeField] private UserProgress userProgress;
-    public Dictionary<string, int> CategoryCounters { get; set; }
+    public Dictionary<string, int> CategoryCounters { get; set; }  
     public async void CategoryProgressInitialize()
     {
-        if (!await firebaseProvider.TryGetCategoryProgress(userProgress.DeviceId))
+        if (await firebaseProvider.TryGetCategoryProgress(userProgress.DeviceId))
+        {
+            Debug.Log("Çalýþtý");
+        }
+        else
         {
             CategoryCounters = new Dictionary<string, int>();
         }
@@ -22,9 +26,9 @@ public class CategoryManager:MonoBehaviour
             CategoryCounters = new Dictionary<string, int>();
         }
         else
-        {
+        {   
             Dictionary<string, int> progressDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(progressDictJson);
-            CategoryCounters = progressDict;
+            CategoryCounters = progressDict;   
         }
     }
     public void OnDestroy()

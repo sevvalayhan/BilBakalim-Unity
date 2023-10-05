@@ -2,7 +2,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class AnswerButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI answerText;

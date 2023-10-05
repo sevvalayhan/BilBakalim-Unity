@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -46,7 +47,8 @@ public class QuestionController : MonoBehaviour
             StartCoroutine(clickedButton.ChangeButtonColorAnimation(Color.green));
             AudioManager.Instance.Play(AudioManager.Instance.TrueEffectSource);
             panelController.UpdatePanelText();
-            if (counter.Equals(questionProvider.LoadedQuestions.Count))
+            SaveCategoryProgress();
+            if (counter.Equals(questionProvider.LoadedQuestions.Count-1))
             {
                 OnGameOver();
             }
@@ -77,9 +79,13 @@ public class QuestionController : MonoBehaviour
         GameManager.IsGameActive = false;   
         panelController.SetPanelActive(panelController.ResultPanel);
         scoreTitleText.text = score.ToString() + " doðru cevap verdiniz.";
-        Debug.Log("Oyun Bitti");
-        AudioManager.Instance.Play(AudioManager.Instance.TimeOverEffectSource);     
+        AudioManager.Instance.Play(AudioManager.Instance.TimeOverEffectSource);  
         timeController.ResetTime();
+    }
+    public void SaveCategoryProgress()
+    {
+        string categoryProgress = JsonConvert.SerializeObject(categoryManager.CategoryCounters);
+        PlayerPrefs.SetString(CATEGORY_PROGRESS, categoryProgress);
     }
     public void RepeatGame()
     {

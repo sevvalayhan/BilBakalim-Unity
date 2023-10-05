@@ -10,17 +10,13 @@ public class UserProgress : MonoBehaviour
     private void Start()
     {        
         user = new User();      
-        DeviceId = SystemInfo.deviceUniqueIdentifier;
-        user.CategoryProgress = new Dictionary<string, int>();
-    }
-  
+        DeviceId = SystemInfo.deviceUniqueIdentifier;        
+    }  
     public void SaveUser()
     {
         panelController.SavePlayerButton();
-        user.HighScore = PlayerPrefs.GetInt(PanelController.PLAYER_HIGH_SCORE);
-        user.UserName = PlayerPrefs.GetString(PanelController.PLAYER_PREF_NAME);
+        SaveUserHighScore();
         Debug.Log(user.UserName);
-        firebaseProvider.TrySaveUser(DeviceId,user);
     }
     void SaveUserHighScore()
     {

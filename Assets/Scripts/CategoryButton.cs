@@ -18,7 +18,7 @@ public class CategoryButton : MonoBehaviour
             if (await questionProvider.TryLoadQuestionsFromCategoryName(categoryName))
             {
                 CategoryManager.CurrentCategory = categoryName;
-                categoryManager.CategoryProgressInitialize();
+                categoryManager.CategoryManagerInitialize();
                 questionController.Initialize();
             }
             else
