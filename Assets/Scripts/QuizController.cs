@@ -2,8 +2,9 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-public class QuestionController : MonoBehaviour
+public class QuizController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI questionTitleText;
     [SerializeField] private TextMeshProUGUI scoreTitleText;
@@ -13,6 +14,7 @@ public class QuestionController : MonoBehaviour
     [SerializeField] private PanelController panelController;
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private TimeController timeController;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private Animator quizAnimator;
     public static int counter;
     public static int score;
@@ -37,28 +39,28 @@ public class QuestionController : MonoBehaviour
         }
         AudioManager.Instance.Play(AudioManager.Instance.NextQuestionSoundEffect);
     }
-    public void CheckAnswer(AnswerButton clickedButton)
-    {       
+    public void CheckAnswer2(AnswerButton clickedButton)
+    {    
+         
         if (questionProvider.LoadedQuestions[counter].RightAnswerIndex == clickedButton.AnswerIndex)
-        {
-            score++;
-            counter++;            
-            categoryManager.SetCategoryCounter(CategoryManager.CurrentCategory,counter);
+        {                      
+            SaveCategoryProgress(counter);
             StartCoroutine(clickedButton.ChangeButtonColorAnimation(Color.green));
-            AudioManager.Instance.Play(AudioManager.Instance.TrueEffectSource);
-            panelController.UpdatePanelText();
-            SaveCategoryProgress();
-            if (counter.Equals(questionProvider.LoadedQuestions.Count-1))
+            AudioManager.Instance.Play(AudioManager.Instance.TrueEffectSource);     
+            if (counter.Equals(questionProvider.LoadedQuestions.Count))
             {
-                OnGameOver();
+                EndGame();
             }
             else
             {
                 StartCoroutine(NextQuestion());
-                if (PlayerPrefs.GetInt(PanelController.PLAYER_HIGH_SCORE) < score)
+                score++;                
+                counter++;
+                if (PlayerPrefs.GetInt(PanelController.PLAYER_HIGH_SCORE) <= score)
                 {
                     PlayerPrefs.SetInt(PanelController.PLAYER_HIGH_SCORE, score);
                 }
+               
             }
         }
         else
@@ -69,32 +71,86 @@ public class QuestionController : MonoBehaviour
             StartCoroutine(answerButtons[questionProvider.LoadedQuestions[counter].RightAnswerIndex].ChangeButtonColorAnimation(Color.green));
             StartCoroutine(NextQuestion());
             counter++;
-        }
-        
-        Debug.Log("PanelController çalýþtý");
+        }        
+        panelController.UpdatePanelText();  
+    }
+    public void CheckAnswer(AnswerButton clickedButton)
+    {
+        panelController.UpdatePanelText();
+        if (!counter.Equals(questionProvider.LoadedQuestions.Count))
+        {
+            if (questionProvider.LoadedQuestions[counter].RightAnswerIndex == clickedButton.AnswerIndex)
+            {
+                TrueAnswerEffect(clickedButton);
+                score++;      
+                if (PlayerPrefs.GetInt(PanelController.PLAYER_HIGH_SCORE) <= score)
+                {
+                    PlayerPrefs.SetInt(PanelController.PLAYER_HIGH_SCORE, score);
+                }
+            }
+            else
+            {
+                FalseAnswerEffect(clickedButton);
+            }
+            counter++;
+            if (!counter.Equals(questionProvider.LoadedQuestions.Count))
+            {
+                StartCoroutine(NextQuestion());
+            }
+            else
+            {
+                EndGame();
+            }
+        }        
+        panelController.UpdatePanelText();        
+        SaveCategoryProgress(counter);
+    }
+    public void TrueAnswerEffect(AnswerButton clickedButton)
+    {        
+        StartCoroutine(clickedButton.ChangeButtonColorAnimation(Color.green));
+        AudioManager.Instance.Play(AudioManager.Instance.TrueEffectSource);
+    }
+    public void FalseAnswerEffect(AnswerButton clickedButton)
+    {
+        StartCoroutine(clickedButton.ChangeButtonColorAnimation(Color.red));
+        AudioManager.Instance.Play(AudioManager.Instance.FalseEffectSource);
+        StartCoroutine(answerButtons[questionProvider.LoadedQuestions[counter].RightAnswerIndex].ChangeButtonColorAnimation(Color.green));
     }
     public void OnGameOver()
-    { 
+    {
+        counter++;
         GameManager.IsGameOver = true;
         GameManager.IsGameActive = false;   
         panelController.SetPanelActive(panelController.ResultPanel);
+        panelController.UpdatePanelText();
         scoreTitleText.text = score.ToString() + " doðru cevap verdiniz.";
-        AudioManager.Instance.Play(AudioManager.Instance.TimeOverEffectSource);  
-        timeController.ResetTime();
+        AudioManager.Instance.Play(AudioManager.Instance.TimeOverEffectSource);
+        timeController.ResetTime(); 
     }
-    public void SaveCategoryProgress()
+    public void EndGame()
     {
+        counter = 0;
+        timeController.ResetTime();
+        panelController.SetPanelActive(panelController.EndGamePanel);
+        panelController.UpdatePanelText();
+        GameManager.IsGameOver = true; 
+        GameManager.IsGameActive= false;
+    }
+    public void SaveCategoryProgress(int _counter)
+    {
+        categoryManager.SetCategoryCounter(CategoryManager.CurrentCategory, _counter);
         string categoryProgress = JsonConvert.SerializeObject(categoryManager.CategoryCounters);
         PlayerPrefs.SetString(CATEGORY_PROGRESS, categoryProgress);
     }
     public void RepeatGame()
     {
-        counter++;
-        GameManager.IsGameOver = false;
-        GameManager.IsGameActive = true;        
+               
         score = 0;
         panelController.SetPanelActive(panelController.QuestionPanel);
+        SaveCategoryProgress(counter);
         timeController.ResetTime();
+        GameManager.IsGameOver = false;
+        GameManager.IsGameActive = true; 
     }      
     public IEnumerator NextQuestion()
     {
@@ -102,5 +158,9 @@ public class QuestionController : MonoBehaviour
         yield return new WaitForSeconds(loadingTime);        
         quizAnimator.SetTrigger("IsLoadAnimationActive");
         SetButtonData();
+    }
+    private void OnDestroy()
+    {
+        SaveCategoryProgress(counter);
     }
 }

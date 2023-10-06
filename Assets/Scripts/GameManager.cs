@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] QuestionController questionController;
+    [SerializeField] QuizController questionController;
     public static bool IsGameOver { get; set; }
     public static bool IsGameActive { get; set; }
     void Start()

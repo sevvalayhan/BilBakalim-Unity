@@ -6,7 +6,7 @@ public class AnswerButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI answerText;
     [SerializeField] private Button buttonComponent;
-    [SerializeField] private QuestionController questionController;
+    [SerializeField] private QuizController questionController;
     public int AnswerIndex { get; private set; }
     void Start()
     {
@@ -25,7 +25,7 @@ public class AnswerButton : MonoBehaviour
     public IEnumerator ChangeButtonColorAnimation(Color color)
     {
         buttonComponent.image.color = color;
-        yield return new WaitForSeconds(QuestionController.loadingTime);        
+        yield return new WaitForSeconds(QuizController.loadingTime);        
         buttonComponent.image.color = Color.white;
     }  
 }

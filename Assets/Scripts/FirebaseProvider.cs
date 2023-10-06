@@ -19,11 +19,9 @@ public class FirebaseProvider : MonoBehaviour, IQuestionProvider
             {
                 instance = FindObjectOfType<FirebaseProvider>();
             }
-            Debug.Log(instance.ToString());
             return instance;
         }
-    }   
-  
+    }     
     private void Start()
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>

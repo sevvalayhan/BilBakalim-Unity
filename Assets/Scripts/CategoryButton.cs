@@ -4,7 +4,7 @@ public class CategoryButton : MonoBehaviour
 {
     [SerializeField] Button categoryButton;
     [SerializeField] FirebaseProvider questionProvider;
-    [SerializeField] QuestionController questionController;
+    [SerializeField] QuizController questionController;
     [SerializeField] CategoryManager categoryManager;
     public string categoryName;
     private void Awake()

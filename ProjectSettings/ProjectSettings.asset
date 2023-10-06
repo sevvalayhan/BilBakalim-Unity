@@ -16,7 +16,7 @@ PlayerSettings:
   productName: "BilBakal\u0131m-Game"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.29411766, g: 0, b: 0.50980395, a: 1}
+  m_SplashScreenBackgroundColor: {r: 0.3661636, g: 0.04215021, b: 0.6037736, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
@@ -727,7 +727,7 @@ PlayerSettings:
   ps4IncludedModules: []
   ps4attribVROutputEnabled: 0
   monoEnv: 
-  splashScreenBackgroundSourceLandscape: {fileID: 0}
+  splashScreenBackgroundSourceLandscape: {fileID: 21300000, guid: 187a99197c6c9394e80b1f54d3baf657, type: 3}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
   blurSplashScreenBackground: 1
   spritePackerPolicy: 

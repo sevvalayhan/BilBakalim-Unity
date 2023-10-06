@@ -20,7 +20,7 @@ public class CategoryManager:MonoBehaviour
     }
     public void CategoryManagerInitialize()
     {
-        string progressDictJson = PlayerPrefs.GetString(QuestionController.CATEGORY_PROGRESS);
+        string progressDictJson = PlayerPrefs.GetString(QuizController.CATEGORY_PROGRESS);
         if (string.IsNullOrEmpty(progressDictJson))
         {
             CategoryCounters = new Dictionary<string, int>();
@@ -33,7 +33,7 @@ public class CategoryManager:MonoBehaviour
     }
     public void OnDestroy()
     {
-        SetCategoryCounter(CurrentCategory,QuestionController.counter);
+        SetCategoryCounter(CurrentCategory,QuizController.counter);
     }
     public void SetCategoryCounter(string categoryName,int counter)
     {
@@ -47,7 +47,7 @@ public class CategoryManager:MonoBehaviour
     }
     private void InitializeCategoryCounter(string categoryName)
     {
-        if (!CategoryCounters.ContainsKey(CurrentCategory))
+        if(!CategoryCounters.ContainsKey(CurrentCategory))
         {
             CategoryCounters.Add(categoryName, 0);
         }
